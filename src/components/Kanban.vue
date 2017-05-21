@@ -1,13 +1,13 @@
 <template>
     <div class="drag-container">
     	<ul class="drag-list">
-    		<li v-for="status in statuses" class="drag-column" :class="{['drag-column-' + status]: true}">
+    		<li v-for="stage in stages" class="drag-column" :class="{['drag-column-' + stage]: true}">
     			<span class="drag-column-header">
-    				<h2>{{ status }}</h2>
+    				<h2>{{ stage }}</h2>
     			</span>
     			<div class="drag-options"></div>
-    			<ul class="drag-inner-list" ref="list" :data-status="status">
-                    <li class="drag-item" v-for="block in getBlocks(status)" :data-block-id="block.id" :key="block.id">
+    			<ul class="drag-inner-list" ref="list" :data-status="stage">
+                    <li class="drag-item" v-for="block in getBlocks(stage)" :data-block-id="block.id" :key="block.id">
                         <slot :name="block.id">
                             <strong>{{ block.status }}</strong>
                             <div>{{ block.id }}</div>
@@ -26,19 +26,19 @@
       name: 'KanbanBoard',
 
       props: {
-        statuses: {},
-        items: {},
+        stages: {},
+        blocks: {},
       },
 
       computed: {
-        blocks() {
-          return this.items;
+        localBlocks() {
+          return this.blocks;
         },
       },
 
       methods: {
         getBlocks(status) {
-          return this.blocks.filter(block => block.status === status);
+          return this.localBlocks.filter(block => block.status === status);
         },
       },
 

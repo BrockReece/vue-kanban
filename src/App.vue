@@ -6,7 +6,7 @@
               <a href="//codepen.io/ettrics/pen/QbPEeg">Codepen</a>
           </h4>
     </section>
-    <Kanban :statuses="statuses" :items="blocks" @update-block="updateBlock">
+    <Kanban :stages="statuses" :blocks="blocks" @update-block="updateBlock">
         <div v-for="item in blocks" :slot="item.id">
             <div>
                 <strong>id:</strong> {{ item.id }}
