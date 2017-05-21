@@ -1,16 +1,12 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
     <Kanban :statuses="statuses" :items="blocks" @update-block="updateBlock">
         <div v-for="item in blocks" :slot="item.id">
             <div>
                 <strong>id:</strong> {{ item.id }}
             </div>
             <div>
-                <strong>Title:</strong> {{ item.title }}
-            </div>
-            <div>
-                <strong>Status:</strong> {{ item.status }}
+                {{ item.title }}
             </div>
         </div>
     </Kanban>
@@ -37,7 +33,7 @@ export default {
       this.blocks.push({
         id: i,
         status: this.statuses[Math.floor(Math.random() * 4)],
-        title: faker.company.bsBuzz(),
+        title: faker.company.bs(),
       });
     }
   },

@@ -1,3 +1,6 @@
 module.exports = {
-  NODE_ENV: '"production"'
+  NODE_ENV: '"production"',
+  build: {
+      assetsPublicPath: '/vue-kanban/',
+  },
 }

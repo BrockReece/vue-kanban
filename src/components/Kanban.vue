@@ -16,7 +16,6 @@
     			</ul>
     		</li>
     	</ul>
-        {{ blocks }}
     </div>
 </template>
 
