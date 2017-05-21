@@ -33,6 +33,18 @@ and then use the component in your project.
 #### Props
 - stages: an array of stages for the kanban board
 - blocks: an array of objects that will make up the blocks on the kanban board
+```js
+{
+  stages: ['on-hold', 'in-progress', 'needs-review', 'approved'],
+  blocks: [
+    {
+      id: 1,
+      status: 'on-hold',
+      title: 'Test',
+    },
+  ],
+}
+```
 
 ### Receiving Changes
 The component will emit an event when a block is moved
