@@ -4,7 +4,6 @@
   "description": "A Vue.js project",
   "author": "Brock <brock.reece@croud.co.uk>",
   "main": "src/plugin.js",
-  "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
