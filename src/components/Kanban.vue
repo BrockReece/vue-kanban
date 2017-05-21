@@ -8,7 +8,7 @@
     			<div class="drag-options"></div>
     			<ul class="drag-inner-list" ref="list" :data-status="status">
                     <li class="drag-item" v-for="block in getBlocks(status)" :data-block-id="block.id" :key="block.id">
-                        <slot :name="String(block.id)">
+                        <slot :name="block.id">
                             <strong>{{ block.status }}</strong>
                             <div>{{ block.id }}</div>
                         </slot>
