@@ -1,27 +1,74 @@
 # vue-kanban
 
-> A Vue.js project
+> A drag and drop kanban board component
 
-## Build Setup
+### [Demo](https://brockreece.github.io/vue-kanban/)
 
+### Installation
+
+Add vue-kanban to your project with npm
 ``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run all tests
-npm test
+npm install vue-kanban 
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+... or yarn
+```bash
+yarn add vue-kanban
+```
+
+### Basic Usage
+
+Install the plugin
+```js
+import vueKanban from 'vue-kanban'
+
+Vue.use(vueKanban)
+```
+
+and then use the component in your project.
+```html
+<kanban-board :stages="stages" :blocks="blocks"></kanban-board>
+```
+
+#### Props
+- stages: an array of stages for the kanban board
+- blocks: an array of objects that will make up the blocks on the kanban board
+
+### Receiving Changes
+The component will emit an event when a block is moved
+
+```html
+<kanban-board :stages="stages" :blocks="blocks" @update-block="updateBlock"></kanban-board>
+<script>
+...
+  methods: {
+    updateBlock(id, status) {
+      this.blocks.find(b => b.id === Number(id)).status = status;
+    },
+  },
+...
+</script>
+```
+
+### Add some style
+I have included a scss stylesheet in this repo as a starting point that can be used in your project
+```html
+<style lang="scss">
+  @import './assets/kanban.scss';
+</style>
+```
+
+### Customize the kanban blocks
+Each block has a named slot which can be extended from the parent, like so...
+```html
+<kanban-board :stages="stages" :blocks="blocks" @update-block="updateBlock">
+  <div v-for="block in blocks" :slot="block.id">
+    <div>
+      <strong>id:</strong> {{ block.id }}
+    </div>
+    <div>
+      {{ block.title }}
+    </div>
+  </div>
+</kanban-board>
+```
