@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A Vue.js project",
   "author": "Brock <brock.reece@croud.co.uk>",
+  "main": "src/plugin.js",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
