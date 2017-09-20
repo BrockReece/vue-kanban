@@ -1,6 +1,6 @@
-const Kanban = require('./components/Kanban.vue');
+import Kanban from './components/Kanban';
 
-module.exports = {
+export default {
   install(vue) {
     vue.component('kanban-board', Kanban);
   },
