@@ -1,7 +1,7 @@
 <template>
     <div class="drag-container">
     	<ul class="drag-list">
-    		<li v-for="stage in stages" class="drag-column" :class="{['drag-column-' + stage]: true}">
+    		<li v-for="stage in stages" class="drag-column" :class="{['drag-column-' + stage]: true}" :key="stage">
     			<span class="drag-column-header">
     				<h2>{{ stage }}</h2>
     			</span>
@@ -29,6 +29,11 @@
         stages: {},
         blocks: {},
       },
+      data() {
+        return {
+
+        };
+      },
 
       computed: {
         localBlocks() {
@@ -48,6 +53,7 @@
               el.classList.add('is-moving');
             })
             .on('drop', (block, list) => {
+              console.log(list);
               this.$emit('update-block', block.dataset.blockId, list.dataset.status);
             })
             .on('dragend', (el) => {
