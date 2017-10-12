@@ -53,8 +53,11 @@
               el.classList.add('is-moving');
             })
             .on('drop', (block, list) => {
-              console.log(list);
-              this.$emit('update-block', block.dataset.blockId, list.dataset.status);
+              let index = 0;
+              for (index = 0; index < list.children.length; index += 1) {
+                if (list.children[index].classList.contains('is-moving')) break;
+              }
+              this.$emit('update-block', block.dataset.blockId, list.dataset.status, index);
             })
             .on('dragend', (el) => {
               el.classList.remove('is-moving');
