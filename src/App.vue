@@ -7,7 +7,7 @@
           </h4>
     </section>
     <Kanban :stages="statuses" :blocks="blocks" @update-block="updateBlock">
-        <div v-for="item in blocks" :slot="item.id">
+        <div v-for="item in blocks" :slot="item.id" :key="item.id">
             <div>
                 <strong>id:</strong> {{ item.id }}
             </div>
@@ -21,6 +21,7 @@
 
 <script>
 import faker from 'faker';
+import { debounce } from 'lodash';
 import Kanban from './components/Kanban';
 
 export default {
@@ -45,9 +46,9 @@ export default {
   },
 
   methods: {
-    updateBlock(id, status) {
+    updateBlock: debounce(function (id, status) {
       this.blocks.find(b => b.id === Number(id)).status = status;
-    },
+    }, 500),
   },
 };
 </script>
