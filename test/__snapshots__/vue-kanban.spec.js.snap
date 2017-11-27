@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VueKanban Assign to correct column should match snapshot 1`] = `
+<div
+  class="drag-container"
+>
+  <ul
+    class="drag-list"
+  >
+    <li
+      class="drag-column drag-column-on-hold"
+    >
+      <span
+        class="drag-column-header"
+      >
+        <h2>
+          on-hold
+        </h2>
+      </span>
+       
+      <div
+        class="drag-options"
+      />
+       
+      <ul
+        class="drag-inner-list"
+        data-status="on-hold"
+      >
+        <li
+          class="drag-item"
+          data-block-id="1"
+        >
+          <strong>
+            on-hold
+          </strong>
+           
+          <div>
+            1
+          </div>
+        </li>
+      </ul>
+    </li>
+    <li
+      class="drag-column drag-column-in-progress"
+    >
+      <span
+        class="drag-column-header"
+      >
+        <h2>
+          in-progress
+        </h2>
+      </span>
+       
+      <div
+        class="drag-options"
+      />
+       
+      <ul
+        class="drag-inner-list"
+        data-status="in-progress"
+      />
+    </li>
+    <li
+      class="drag-column drag-column-needs-review"
+    >
+      <span
+        class="drag-column-header"
+      >
+        <h2>
+          needs-review
+        </h2>
+      </span>
+       
+      <div
+        class="drag-options"
+      />
+       
+      <ul
+        class="drag-inner-list"
+        data-status="needs-review"
+      />
+    </li>
+    <li
+      class="drag-column drag-column-approved"
+    >
+      <span
+        class="drag-column-header"
+      >
+        <h2>
+          approved
+        </h2>
+      </span>
+       
+      <div
+        class="drag-options"
+      />
+       
+      <ul
+        class="drag-inner-list"
+        data-status="approved"
+      />
+    </li>
+  </ul>
+</div>
+`;
