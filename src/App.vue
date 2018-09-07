@@ -1,20 +1,26 @@
 <template>
   <div id="app">
     <section class="section">
-  	      <h4>
-              Vue adoptation of Ettric's
-              <a href="//codepen.io/ettrics/pen/QbPEeg">Codepen</a>
-          </h4>
+      <h4>
+        Vue adoptation of Ettric's
+        <a href="//codepen.io/ettrics/pen/QbPEeg">Codepen</a>
+      </h4>
     </section>
     <Kanban :stages="statuses" :blocks="blocks" @update-block="updateBlock">
-        <div v-for="item in blocks" :slot="item.id" :key="item.id">
-            <div>
-                <strong>id:</strong> {{ item.id }}
-            </div>
-            <div>
-                {{ item.title }}
-            </div>
+      <div v-for="stage in statuses" :slot="stage" :key="stage">
+        <h2>
+          {{ stage }}
+          <a>+</a>
+        </h2>
+      </div>
+      <div v-for="item in blocks" :slot="item.id" :key="item.id">
+        <div>
+          <strong>id:</strong> {{ item.id }}
         </div>
+        <div>
+          {{ item.title }}
+        </div>
+      </div>
     </Kanban>
   </div>
 </template>
@@ -54,75 +60,82 @@ export default {
 </script>
 
 <style lang="scss">
-    @import './assets/kanban.scss';
+  @import './assets/kanban.scss';
 
-    $on-hold: #FB7D44;
-    $in-progress: #2A92BF;
-    $needs-review: #F4CE46;
-    $approved: #00B961;
+  $on-hold: #FB7D44;
+  $in-progress: #2A92BF;
+  $needs-review: #F4CE46;
+  $approved: #00B961;
 
-    * {
-    	box-sizing: border-box;
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    background: #33363D;
+    color: white;
+    font-family: 'Lato';
+    font-weight: 300;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .drag-column {
+    .drag-column-header > div {
+      width: 100%;
+      h2 > a {
+        float: right;
+      }
     }
 
-    body {
-    	background: #33363D;
-    	color: white;
-    	font-family: 'Lato';
-    	font-weight: 300;
-    	line-height: 1.5;
-    	-webkit-font-smoothing: antialiased;
+    &-on-hold {
+      .drag-column-header,
+      .is-moved,
+      .drag-options {
+        background: $on-hold;
+      }
     }
 
-    .drag-column {
-        &-on-hold {
-            .drag-column-header,
-            .is-moved,
-            .drag-options {
-                background: $on-hold;
-            }
-        }
-
-        &-in-progress {
-            .drag-column-header,
-            .is-moved,
-            .drag-options {
-                background: $in-progress;
-            }
-        }
-
-        &-needs-review {
-            .drag-column-header,
-            .is-moved,
-            .drag-options{
-                background: $needs-review;
-            }
-        }
-
-        &-approved {
-            .drag-column-header,
-            .is-moved,
-            .drag-options {
-                background: $approved;
-            }
-        }
+    &-in-progress {
+      .drag-column-header,
+      .is-moved,
+      .drag-options {
+        background: $in-progress;
+      }
     }
 
-    .section {
-    	padding: 20px;
-    	text-align: center;
-
-    	a {
-    		color: white;
-    		text-decoration: none;
-    		font-weight: 300;
-    	}
-
-    	h4 {
-    		font-weight: 400;
-    		a {
-    			font-weight: 600;
-    		}
-    	}
+    &-needs-review {
+      .drag-column-header,
+      .is-moved,
+      .drag-options{
+        background: $needs-review;
+      }
     }
+
+    &-approved {
+      .drag-column-header,
+      .is-moved,
+      .drag-options {
+        background: $approved;
+      }
+    }
+  }
+
+  .section {
+    padding: 20px;
+    text-align: center;
+
+    a {
+      color: white;
+      text-decoration: none;
+      font-weight: 300;
+    }
+
+    h4 {
+      font-weight: 400;
+      a {
+        font-weight: 600;
+      }
+    }
+  }
 </style>
