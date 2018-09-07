@@ -3,7 +3,9 @@
     <ul class="drag-list">
       <li v-for="stage in stages" class="drag-column" :class="{['drag-column-' + stage]: true}" :key="stage">
         <span class="drag-column-header">
-          <h2>{{ stage }}</h2>
+          <slot :name="stage">
+            <h2>{{ stage }}</h2>
+          </slot>
         </span>
         <div class="drag-options"></div>
         <ul class="drag-inner-list" ref="list" :data-status="stage">
