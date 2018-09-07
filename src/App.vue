@@ -7,6 +7,12 @@
       </h4>
     </section>
     <Kanban :stages="statuses" :blocks="blocks" @update-block="updateBlock">
+      <div v-for="stage in statuses" :slot="stage" :key="stage">
+        <h2>
+          {{ stage }}
+          <a>+</a>
+        </h2>
+      </div>
       <div v-for="item in blocks" :slot="item.id" :key="item.id">
         <div>
           <strong>id:</strong> {{ item.id }}
@@ -75,6 +81,13 @@ export default {
   }
 
   .drag-column {
+    .drag-column-header > div {
+      width: 100%;
+      h2 > a {
+        float: right;
+      }
+    }
+
     &-on-hold {
       .drag-column-header,
       .is-moved,
