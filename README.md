@@ -74,6 +74,9 @@ I have included a scss stylesheet in this repo as a starting point that can be u
 Each block has a named slot which can be extended from the parent, like so...
 ```html
 <kanban-board :stages="stages" :blocks="blocks" @update-block="updateBlock">
+  <div v-for="stage in stages" :slot="stage">
+    <h2>{{ stage }}</h2>
+  </div>
   <div v-for="block in blocks" :slot="block.id">
     <div>
       <strong>id:</strong> {{ block.id }}
