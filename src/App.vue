@@ -74,7 +74,7 @@ export default {
   body {
     background: #33363D;
     color: white;
-    font-family: 'Lato';
+    font-family: system-ui, BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     font-weight: 300;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
