@@ -21,6 +21,9 @@
           {{ item.title }}
         </div>
       </div>
+      <div v-for="stage in statuses" :key="stage" :slot="`footer-${stage}`">
+          <a href="" @click.prevent="() => addBlock(stage)">+ Add new block</a>
+      </div>
     </Kanban>
   </div>
 </template>
@@ -55,6 +58,13 @@ export default {
     updateBlock: debounce(function (id, status) {
       this.blocks.find(b => b.id === Number(id)).status = status;
     }, 500),
+    addBlock: debounce(function (stage) {
+      this.blocks.push({
+        id: this.blocks.length,
+        status: stage,
+        title: faker.company.bs(),
+      });
+    }, 500),
   },
 };
 </script>
@@ -86,6 +96,17 @@ export default {
       h2 > a {
         float: right;
       }
+    }
+
+    .drag-column-footer > div {
+        margin-left: 10px;
+        a {
+            text-decoration: none;
+            color: white;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
     }
 
     &-on-hold {
