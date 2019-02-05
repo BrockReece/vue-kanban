@@ -39,6 +39,10 @@ exports[`VueKanban Assign to correct column should match snapshot 1`] = `
           </div>
         </li>
       </ul>
+       
+      <div
+        class="drag-column-footer"
+      />
     </li>
     <li
       class="drag-column drag-column-in-progress"
@@ -58,6 +62,10 @@ exports[`VueKanban Assign to correct column should match snapshot 1`] = `
       <ul
         class="drag-inner-list"
         data-status="in-progress"
+      />
+       
+      <div
+        class="drag-column-footer"
       />
     </li>
     <li
@@ -79,6 +87,10 @@ exports[`VueKanban Assign to correct column should match snapshot 1`] = `
         class="drag-inner-list"
         data-status="needs-review"
       />
+       
+      <div
+        class="drag-column-footer"
+      />
     </li>
     <li
       class="drag-column drag-column-approved"
@@ -98,6 +110,10 @@ exports[`VueKanban Assign to correct column should match snapshot 1`] = `
       <ul
         class="drag-inner-list"
         data-status="approved"
+      />
+       
+      <div
+        class="drag-column-footer"
       />
     </li>
   </ul>
