@@ -16,6 +16,9 @@
             </slot>
           </li>
         </ul>
+        <div class="drag-column-footer">
+            <slot :name="`footer-${stage}`"></slot>
+        </div>
       </li>
     </ul>
   </div>
