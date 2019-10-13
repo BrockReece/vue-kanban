@@ -52,28 +52,31 @@
       },
     },
 
-    mounted() {
-      dragula(this.$refs.list)
-        .on('drag', (el) => {
-          el.classList.add('is-moving');
-        })
-        .on('drop', (block, list) => {
-          let index = 0;
-          for (index = 0; index < list.children.length; index += 1) {
-            if (list.children[index].classList.contains('is-moving')) break;
-          }
-          this.$emit('update-block', block.dataset.blockId, list.dataset.status, index);
-        })
-        .on('dragend', (el) => {
-          el.classList.remove('is-moving');
+  updated() {
+    this.drake.containers = this.$refs.list;
+  },
+  mounted() {
+    this.drake = dragula(this.$refs.list)
+      .on('drag', (el) => {
+        el.classList.add('is-moving');
+      })
+      .on('drop', (block, list) => {
+        let index = 0;
+        for (index = 0; index < list.children.length; index += 1) {
+          if (list.children[index].classList.contains('is-moving')) break;
+        }
+        this.$emit('update-block', block.dataset.blockId, list.dataset.status, index);
+      })
+      .on('dragend', (el) => {
+        el.classList.remove('is-moving');
 
+        window.setTimeout(() => {
+          el.classList.add('is-moved');
           window.setTimeout(() => {
-            el.classList.add('is-moved');
-            window.setTimeout(() => {
-              el.classList.remove('is-moved');
-            }, 600);
-          }, 100);
-        });
-    },
+            el.classList.remove('is-moved');
+          }, 600);
+        }, 100);
+      });
+  }
   };
 </script>
