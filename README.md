@@ -2,13 +2,13 @@
 
 > A drag and drop kanban board component
 
-### [Demo](https://brockreece.github.io/vue-kanban/)
+### [Demo](https://vue-kanban.netlify.com/)
 
 ### Installation
 
 Add vue-kanban to your project with npm
 ``` bash
-npm install vue-kanban 
+npm install vue-kanban
 ```
 
 ... or yarn
