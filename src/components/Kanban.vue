@@ -31,8 +31,18 @@
     name: 'KanbanBoard',
 
     props: {
-      stages: {},
-      blocks: {},
+      stages: {
+        type: Array,
+        required: true,
+      },
+      blocks: {
+        type: Array,
+        required: true,
+      },
+      config: {
+        type: Object,
+        default: {},
+      },
     },
     data() {
       return {
