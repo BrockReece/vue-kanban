@@ -31,8 +31,8 @@ and then use the component in your project.
 ```
 
 #### Required Props
-- stages: an array of stages for the kanban board
-- blocks: an array of objects that will make up the blocks on the kanban board
+- **stages**: an array of stages for the kanban board
+- **blocks**: an array of objects that will make up the blocks on the kanban board
 ```js
 {
   stages: ['on-hold', 'in-progress', 'needs-review', 'approved'],
@@ -47,7 +47,8 @@ and then use the component in your project.
 ```
 
 ### Advanced Props
-- config: an object of dragula options to be passed to the kanban board, see [dragula docs](https://github.com/bevacqua/dragula#dragulacontainers-options) for more details
+- **config**: an object of dragula options to be passed to the kanban board, see [dragula docs](https://github.com/bevacqua/dragula#dragulacontainers-options) for more details
+- **state-machine-config**: an xstate config object that can be used to manage the kanban board, read [here](#state-machine) for more details
 ```js
 {
   config: {
@@ -99,4 +100,43 @@ Each block has a named slot which can be extended from the parent, like so...
     </div>
   </div>
 </kanban-board>
+```
+
+### State machine
+Vue-kanban is now compatible with [xstate](https://xstate.js.org/docs/) state machines.
+
+You can pass an xstate config as a prop and the Kanban board will use the state machine to restrict which moves are allowed.
+
+As an example we can achieve the following workflow
+
+![Read more words!](/src/assets/fsm.png)
+
+With the following config
+```js
+stateMachineConfig: {
+  id: 'kanban',
+  initial: 'on-hold',
+  states: {
+    'on-hold': {
+      on: {
+        PICK_UP: 'in-progress',
+      },
+    },
+    'in-progress': {
+      on: {
+        RELINQUISH_TASK: 'on-hold',
+        PUSH_TO_QA: 'needs-review',
+      },
+    },
+    'needs-review': {
+      on: {
+        REQUEST_CHANGE: 'in-progress',
+        PASS_QA: 'approved',
+      },
+    },
+    approved: {
+      type: 'final',
+    },
+  },
+},
 ```
