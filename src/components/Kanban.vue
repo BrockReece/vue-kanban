@@ -52,9 +52,9 @@
       },
     },
 
-  updated() {
-    this.drake.containers = this.$refs.list;
-  },
+    updated() {
+      this.drake.containers = this.$refs.list;
+    },
   mounted() {
     this.drake = dragula(this.$refs.list)
       .on('drag', (el) => {
@@ -77,6 +77,6 @@
           }, 600);
         }, 100);
       });
-  }
+    },
   };
 </script>
