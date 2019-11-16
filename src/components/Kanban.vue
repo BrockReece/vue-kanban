@@ -99,12 +99,21 @@
       .on('drag', (el) => {
         el.classList.add('is-moving');
       })
-      .on('drop', (block, list) => {
+      .on('drop', (block, list, source) => {
         let index = 0;
         for (index = 0; index < list.children.length; index += 1) {
           if (list.children[index].classList.contains('is-moving')) break;
         }
-        this.$emit('update-block', block.dataset.blockId, list.dataset.status, index);
+
+        let newState = list.dataset.status;
+
+        if (this.machine) {
+          const transition = this.findTransition(list, source);
+          if (!transition) return;
+          newState = this.machine.transition(source.dataset.status, transition).value;
+        }
+
+        this.$emit('update-block', block.dataset.blockId, newState, index);
       })
       .on('dragend', (el) => {
         el.classList.remove('is-moving');
