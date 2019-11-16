@@ -65,8 +65,9 @@
     updated() {
       this.drake.containers = this.$refs.list;
     },
-  mounted() {
-    this.drake = dragula(this.$refs.list)
+
+    mounted() {
+      this.drake = dragula(this.$refs.list, this.config)
       .on('drag', (el) => {
         el.classList.add('is-moving');
       })
