@@ -66,6 +66,25 @@
       getBlocks(status) {
         return this.localBlocks.filter(block => block.status === status);
       },
+
+      findPossibleTransitions(sourceState) {
+        return this.machine.config.states[sourceState].on || {};
+      },
+
+      findTransition(target, source) {
+        const targetState = target.dataset.status;
+        const sourceState = source.dataset.status;
+        const possibleTransitions = this.findPossibleTransitions(sourceState);
+        return Object.keys(possibleTransitions)
+          .find(transition => possibleTransitions[transition] === targetState);
+      },
+
+      accepts(block, target, source) {
+        if (!this.machine) return true;
+        const targetState = target.dataset.status;
+        const sourceState = source.dataset.status;
+        return Object.values(this.findPossibleTransitions(sourceState)).includes(targetState);
+      },
     },
 
     updated() {
@@ -73,7 +92,10 @@
     },
 
     mounted() {
-      this.drake = dragula(this.$refs.list, this.config)
+      this.drake = dragula(this.$refs.list, {
+        accepts: this.accepts,
+        ...this.config,
+      })
       .on('drag', (el) => {
         el.classList.add('is-moving');
       })
