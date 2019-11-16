@@ -30,7 +30,7 @@ and then use the component in your project.
 <kanban-board :stages="stages" :blocks="blocks"></kanban-board>
 ```
 
-#### Props
+#### Required Props
 - stages: an array of stages for the kanban board
 - blocks: an array of objects that will make up the blocks on the kanban board
 ```js
@@ -43,6 +43,19 @@ and then use the component in your project.
       title: 'Test',
     },
   ],
+}
+```
+
+### Advanced Props
+- config: an object of dragula options to be passed to the kanban board, see [dragula docs](https://github.com/bevacqua/dragula#dragulacontainers-options) for more details
+```js
+{
+  config: {
+    // Don't allow blocks to be moved out of the approved stage
+    accepts(block, target, source) {
+      return source.dataset.status !== 'approved',
+    }
+  }
 }
 ```
 
