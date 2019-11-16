@@ -26,6 +26,7 @@
 
 <script>
   import dragula from 'dragula';
+  import { Machine } from 'xstate';
 
   export default {
     name: 'KanbanBoard',
@@ -43,10 +44,15 @@
         type: Object,
         default: {},
       },
+      stateMachineConfig: {
+        type: Object,
+        default: null,
+      },
     },
+
     data() {
       return {
-
+        machine: null,
       };
     },
 
@@ -88,6 +94,11 @@
           }, 600);
         }, 100);
       });
+    },
+
+    created() {
+      if (!this.stateMachineConfig) return;
+      this.machine = Machine(this.stateMachineConfig);
     },
   };
 </script>
