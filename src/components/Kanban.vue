@@ -92,10 +92,8 @@
     },
 
     mounted() {
-      this.drake = dragula(this.$refs.list, {
-        accepts: this.accepts,
-        ...this.config,
-      })
+      this.config.accepts = this.config.accepts || this.accepts;
+      this.drake = dragula(this.$refs.list, this.config)
       .on('drag', (el) => {
         el.classList.add('is-moving');
       })
