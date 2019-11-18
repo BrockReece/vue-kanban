@@ -1,6 +1,6 @@
 {
   "name": "vue-kanban",
-  "version": "1.5.0",
+  "version": "1.6.0-0",
   "description": "A Vue.js project",
   "author": "Brock <brock.reece@croud.co.uk>",
   "main": "src/plugin.js",
