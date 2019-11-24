@@ -31,8 +31,18 @@
     name: 'KanbanBoard',
 
     props: {
-      stages: {},
-      blocks: {},
+      stages: {
+        type: Array,
+        required: true,
+      },
+      blocks: {
+        type: Array,
+        required: true,
+      },
+      config: {
+        type: Object,
+        default: {},
+      },
     },
     data() {
       return {
@@ -52,11 +62,12 @@
       },
     },
 
-  updated() {
-    this.drake.containers = this.$refs.list;
-  },
-  mounted() {
-    this.drake = dragula(this.$refs.list)
+    updated() {
+      this.drake.containers = this.$refs.list;
+    },
+
+    mounted() {
+      this.drake = dragula(this.$refs.list, this.config)
       .on('drag', (el) => {
         el.classList.add('is-moving');
       })
@@ -77,6 +88,6 @@
           }, 600);
         }, 100);
       });
-  }
+    },
   };
 </script>
