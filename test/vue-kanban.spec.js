@@ -50,6 +50,10 @@ describe('VueKanban', () => {
         expect(vm.$refs.kanban.config.copy).toEqual(true);
         expect(vm.$refs.kanban.config.direction).toEqual('horizontal');
       });
+
+      it('should set accepts defaults', () => {
+        expect(vm.$refs.kanban.config.accepts).toEqual(vm.$refs.kanban.accepts);
+      });
       it('should set the dragula defaults', () => {
         expect(vm.$refs.kanban.config.copySortSource).toEqual(false);
       });
@@ -63,6 +67,18 @@ describe('VueKanban', () => {
 
     it('should match snapshot', () => {
       expect(vm.$refs.kanban.$el).toMatchSnapshot();
+    });
+  });
+
+  describe('State machine config', () => {
+    describe('no config', () => {
+      test('machine should be null', () => {
+        expect(vm.$refs.kanban.machine).toBe(null);
+      });
+
+      test('accepts should return true', () => {
+        expect(vm.$refs.kanban.accepts()).toBe(true);
+      });
     });
   });
 });

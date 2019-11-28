@@ -26,6 +26,7 @@
 
 <script>
   import dragula from 'dragula';
+  import { Machine } from 'xstate';
 
   export default {
     name: 'KanbanBoard',
@@ -43,10 +44,15 @@
         type: Object,
         default: {},
       },
+      stateMachineConfig: {
+        type: Object,
+        default: null,
+      },
     },
+
     data() {
       return {
-
+        machine: null,
       };
     },
 
@@ -60,6 +66,25 @@
       getBlocks(status) {
         return this.localBlocks.filter(block => block.status === status);
       },
+
+      findPossibleTransitions(sourceState) {
+        return this.machine.config.states[sourceState].on || {};
+      },
+
+      findTransition(target, source) {
+        const targetState = target.dataset.status;
+        const sourceState = source.dataset.status;
+        const possibleTransitions = this.findPossibleTransitions(sourceState);
+        return Object.keys(possibleTransitions)
+          .find(transition => possibleTransitions[transition] === targetState);
+      },
+
+      accepts(block, target, source) {
+        if (!this.machine) return true;
+        const targetState = target.dataset.status;
+        const sourceState = source.dataset.status;
+        return Object.values(this.findPossibleTransitions(sourceState)).includes(targetState);
+      },
     },
 
     updated() {
@@ -67,16 +92,26 @@
     },
 
     mounted() {
+      this.config.accepts = this.config.accepts || this.accepts;
       this.drake = dragula(this.$refs.list, this.config)
       .on('drag', (el) => {
         el.classList.add('is-moving');
       })
-      .on('drop', (block, list) => {
+      .on('drop', (block, list, source) => {
         let index = 0;
         for (index = 0; index < list.children.length; index += 1) {
           if (list.children[index].classList.contains('is-moving')) break;
         }
-        this.$emit('update-block', block.dataset.blockId, list.dataset.status, index);
+
+        let newState = list.dataset.status;
+
+        if (this.machine) {
+          const transition = this.findTransition(list, source);
+          if (!transition) return;
+          newState = this.machine.transition(source.dataset.status, transition).value;
+        }
+
+        this.$emit('update-block', block.dataset.blockId, newState, index);
       })
       .on('dragend', (el) => {
         el.classList.remove('is-moving');
@@ -88,6 +123,11 @@
           }, 600);
         }, 100);
       });
+    },
+
+    created() {
+      if (!this.stateMachineConfig) return;
+      this.machine = Machine(this.stateMachineConfig);
     },
   };
 </script>
