@@ -42,7 +42,7 @@
       },
       config: {
         type: Object,
-        default: {},
+        default: () => ({}),
       },
       stateMachineConfig: {
         type: Object,
