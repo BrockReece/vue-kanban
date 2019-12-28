@@ -16,9 +16,14 @@ npm install vue-kanban
 yarn add vue-kanban
 ```
 
+...or you can also install through the vue-cli
+```
+vue add vue-cli-plugin-kanban
+```
+
 ### Basic Usage
 
-Install the plugin
+Install the plugin (this plugin is installed for you if you have used the vue-cli)
 ```js
 import vueKanban from 'vue-kanban'
 
