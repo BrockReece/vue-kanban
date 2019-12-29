@@ -4,7 +4,15 @@
 
 ### [Demo](https://vue-kanban.netlify.com/)
 
-### Installation
+## Installation
+
+### Vue CLI
+You can install this plugin through the [Vue CLI](https://cli.vuejs.org/)
+```
+vue add vue-cli-plugin-kanban
+```
+
+### Manual installation
 
 Add vue-kanban to your project with npm
 ``` bash
@@ -16,21 +24,21 @@ npm install vue-kanban
 yarn add vue-kanban
 ```
 
-### Basic Usage
-
-Install the plugin
+Then install the plugin in your entry file
 ```js
 import vueKanban from 'vue-kanban'
 
 Vue.use(vueKanban)
 ```
 
-and then use the component in your project.
+## Basic Usage
+
+The `kanban-board` component has been added globally to your project and so can be used in your templates without having to explicitly import it.
 ```html
 <kanban-board :stages="stages" :blocks="blocks"></kanban-board>
 ```
 
-#### Required Props
+### Required Props
 - **stages**: an array of stages for the kanban board
 - **blocks**: an array of objects that will make up the blocks on the kanban board
 ```js
@@ -76,7 +84,7 @@ The component will emit an event when a block is moved
 </script>
 ```
 
-### Add some style
+## Add some style
 I have included a scss stylesheet in this repo as a starting point that can be used in your project
 ```html
 <style lang="scss">
