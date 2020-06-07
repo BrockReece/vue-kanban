@@ -94,10 +94,22 @@
     mounted() {
       this.config.accepts = this.config.accepts || this.accepts;
       this.drake = dragula(this.$refs.list, this.config)
-      .on('drag', (el) => {
+      .on('drag', (el, source) => {
+        this.$emit('drag', el, source);
         el.classList.add('is-moving');
       })
-      .on('drop', (block, list, source) => {
+      .on('dragend', (el) => {
+        this.$emit('dragend', el);
+        el.classList.remove('is-moving');
+        window.setTimeout(() => {
+          el.classList.add('is-moved');
+          window.setTimeout(() => {
+            el.classList.remove('is-moved');
+          }, 600);
+        }, 100);
+      })
+      .on('drop', (block, list, source, sibling) => {
+        this.$emit('drop', block, list, source, sibling);
         let index = 0;
         for (index = 0; index < list.children.length; index += 1) {
           if (list.children[index].classList.contains('is-moving')) break;
@@ -113,15 +125,23 @@
 
         this.$emit('update-block', block.dataset.blockId, newState, index);
       })
-      .on('dragend', (el) => {
-        el.classList.remove('is-moving');
-
-        window.setTimeout(() => {
-          el.classList.add('is-moved');
-          window.setTimeout(() => {
-            el.classList.remove('is-moved');
-          }, 600);
-        }, 100);
+      .on('cancel', (el, container, source) => {
+        this.$emit('cancel', el, container, source);
+      })
+      .on('remove', (el, container, source) => {
+        this.$emit('remove', el, container, source);
+      })
+      .on('shadow', (el, container, source) => {
+        this.$emit('shadow', el, container, source);
+      })
+      .on('over', (el, container, source) => {
+        this.$emit('over', el, container, source);
+      })
+      .on('out', (el, container, source) => {
+        this.$emit('out', el, container, source);
+      })
+      .on('cloned', (clone, original, type) => {
+        this.$emit('cloned', clone, original, type);
       });
     },
 
