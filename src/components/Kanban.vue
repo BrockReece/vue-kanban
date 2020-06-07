@@ -143,6 +143,7 @@
       .on('cloned', (clone, original, type) => {
         this.$emit('cloned', clone, original, type);
       });
+      this.$emit('init', this.drake);
     },
 
     created() {
