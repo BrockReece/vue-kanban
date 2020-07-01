@@ -8,7 +8,7 @@
           </slot>
         </span>
         <div class="drag-options"></div>
-        <ul class="drag-inner-list" ref="list" :data-status="stage">
+        <ul @scroll="onScroll(stage)" class="drag-inner-list" ref="list" :data-status="stage">
           <li class="drag-item" v-for="block in getBlocks(stage)" :data-block-id="block.id" :key="block.id">
             <slot :name="block.id">
               <strong>{{ block.status }}</strong>
@@ -84,6 +84,10 @@
         const targetState = target.dataset.status;
         const sourceState = source.dataset.status;
         return Object.values(this.findPossibleTransitions(sourceState)).includes(targetState);
+      },
+
+      onScroll(stage) {
+        this.$emit("scroll", stage);
       },
     },
 
