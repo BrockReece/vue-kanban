@@ -9,10 +9,10 @@
         </span>
         <div class="drag-options"></div>
         <ul class="drag-inner-list" ref="list" :data-status="stage">
-          <li class="drag-item" v-for="block in getBlocks(stage)" :data-block-id="block.id" :key="block.id">
-            <slot :name="block.id">
-              <strong>{{ block.status }}</strong>
-              <div>{{ block.id }}</div>
+          <li class="drag-item" v-for="block in getBlocks(stage)" :data-block-id="block[idProp]" :key="block[idProp]">
+            <slot :name="block[idProp]">
+              <strong>{{ block[statusProp] }}</strong>
+              <div>{{ block[idProp] }}</div>
             </slot>
           </li>
         </ul>
@@ -48,6 +48,14 @@
         type: Object,
         default: null,
       },
+      idProp: {
+        type: String,
+        default: 'id',
+      },
+      statusProp: {
+        type: String,
+        default: 'status',
+      },
     },
 
     data() {
@@ -64,7 +72,7 @@
 
     methods: {
       getBlocks(status) {
-        return this.localBlocks.filter(block => block.status === status);
+        return this.localBlocks.filter(block => block[this.statusProp] === status);
       },
 
       findPossibleTransitions(sourceState) {
@@ -87,7 +95,7 @@
       },
 
       allowedTargets(el, source) {
-        const block = this.localBlocks.find(b => b.id === el.dataset.blockId);
+        const block = this.localBlocks.find(b => b[this.idProp] === el.dataset.blockId);
         return this.drake.containers.filter(c => this.config.accepts(block, c, source));
       },
 
