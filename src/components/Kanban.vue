@@ -85,6 +85,15 @@
         const sourceState = source.dataset.status;
         return Object.values(this.findPossibleTransitions(sourceState)).includes(targetState);
       },
+
+      allowedTargets(el, source) {
+        const block = this.localBlocks.find(b => b.id === el.dataset.blockId);
+        return this.drake.containers.filter(c => this.config.accepts(block, c, source));
+      },
+
+      forbiddenTargets(el, source) {
+        return this.drake.containers.filter(c => !this.allowedTargets(el, source).includes(c));
+      },
     },
 
     updated() {
@@ -97,10 +106,13 @@
       .on('drag', (el, source) => {
         this.$emit('drag', el, source);
         el.classList.add('is-moving');
+        this.allowedTargets(el, source).forEach(c => c.classList.add('allowed'));
+        this.forbiddenTargets(el, source).forEach(c => c.classList.add('forbidden'));
       })
       .on('dragend', (el) => {
         this.$emit('dragend', el);
         el.classList.remove('is-moving');
+        this.drake.containers.forEach(c => c.classList.remove('allowed', 'forbidden'));
         window.setTimeout(() => {
           el.classList.add('is-moved');
           window.setTimeout(() => {
