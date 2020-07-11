@@ -89,11 +89,15 @@
 
     updated() {
       this.drake.containers = this.$refs.list;
+      this.drake.mirrorContainer = this.$el;
     },
 
     mounted() {
       this.config.accepts = this.config.accepts || this.accepts;
-      this.drake = dragula(this.$refs.list, this.config)
+      this.drake = dragula(this.$refs.list, {
+        ...this.config,
+        mirrorContainer: this.$el,
+      })
       .on('drag', (el, source) => {
         this.$emit('drag', el, source);
         el.classList.add('is-moving');
