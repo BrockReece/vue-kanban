@@ -8,11 +8,11 @@
           </slot>
         </span>
         <div class="drag-options"></div>
-        <ul @scroll="onScroll(stage)" class="drag-inner-list" ref="list" :data-status="stage" :id="`${stage}-block-list`">
-          <li class="drag-item" v-for="block in getBlocks(stage)" :data-block-id="block.id" :key="block.id">
-            <slot :name="block.id">
-              <strong>{{ block.status }}</strong>
-              <div>{{ block.id }}</div>
+        <ul class="drag-inner-list" ref="list" :data-status="stage" @scroll="onScroll(stage)" :id="`${stage}-block-list`">
+          <li class="drag-item" v-for="block in getBlocks(stage)" :data-block-id="block[idProp]" :key="block[idProp]">
+            <slot :name="block[idProp]">
+              <strong>{{ block[statusProp] }}</strong>
+              <div>{{ block[idProp] }}</div>
             </slot>
           </li>
         </ul>
@@ -48,6 +48,14 @@
         type: Object,
         default: null,
       },
+      idProp: {
+        type: String,
+        default: 'id',
+      },
+      statusProp: {
+        type: String,
+        default: 'status',
+      },
     },
 
     data() {
@@ -64,7 +72,7 @@
 
     methods: {
       getBlocks(status) {
-        return this.localBlocks.filter(block => block.status === status);
+        return this.localBlocks.filter(block => block[this.statusProp] === status);
       },
 
       findPossibleTransitions(sourceState) {
@@ -86,6 +94,15 @@
         return Object.values(this.findPossibleTransitions(sourceState)).includes(targetState);
       },
 
+      allowedTargets(el, source) {
+        const block = this.localBlocks.find(b => b[this.idProp] === el.dataset.blockId);
+        return this.drake.containers.filter(c => this.config.accepts(block, c, source));
+      },
+
+      forbiddenTargets(el, source) {
+        return this.drake.containers.filter(c => !this.allowedTargets(el, source).includes(c));
+      },
+      
       onScroll(stage) {
         this.$emit("scroll", stage);
       },
@@ -93,18 +110,23 @@
 
     updated() {
       this.drake.containers = this.$refs.list;
+      this.drake.mirrorContainer = this.$el;
     },
 
     mounted() {
       this.config.accepts = this.config.accepts || this.accepts;
+      this.config.mirrorContainer = this.$el;
       this.drake = dragula(this.$refs.list, this.config)
       .on('drag', (el, source) => {
         this.$emit('drag', el, source);
         el.classList.add('is-moving');
+        this.allowedTargets(el, source).forEach(c => c.classList.add('allowed'));
+        this.forbiddenTargets(el, source).forEach(c => c.classList.add('forbidden'));
       })
       .on('dragend', (el) => {
         this.$emit('dragend', el);
         el.classList.remove('is-moving');
+        this.drake.containers.forEach(c => c.classList.remove('allowed', 'forbidden'));
         window.setTimeout(() => {
           el.classList.add('is-moved');
           window.setTimeout(() => {
