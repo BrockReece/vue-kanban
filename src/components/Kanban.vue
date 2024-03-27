@@ -8,7 +8,7 @@
           </slot>
         </span>
         <div class="drag-options"></div>
-        <ul class="drag-inner-list" ref="list" :data-status="stage">
+        <ul class="drag-inner-list" ref="list" :data-status="stage" @scroll="onScroll(stage)" :id="`${stage}-block-list`">
           <li class="drag-item" v-for="block in getBlocks(stage)" :data-block-id="block[idProp]" :key="block[idProp]">
             <slot :name="block[idProp]">
               <strong>{{ block[statusProp] }}</strong>
@@ -101,6 +101,10 @@
 
       forbiddenTargets(el, source) {
         return this.drake.containers.filter(c => !this.allowedTargets(el, source).includes(c));
+      },
+      
+      onScroll(stage) {
+        this.$emit("scroll", stage);
       },
     },
 
