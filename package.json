@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "dragula": "^3.7.2",
-    "vue": "^2.2.6",
+    "vue": "^3.0.0",
     "xstate": "^4.6.7"
   },
   "devDependencies": {
